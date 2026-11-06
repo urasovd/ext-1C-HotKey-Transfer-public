@@ -182,6 +182,20 @@ Invoke-Test 'Reception repairs a missing Users item' {
     Add-Result 'Reception repairs a missing Users item' ($broken -and $repaired) "detected=$broken repaired=$repaired"
 }
 
+Invoke-Test 'Reception repairs a login disabled by BSP' {
+    $environment = G $target 'WS_ОкружениеСервер'
+    $gateUser = M (G $target 'ПользователиИнформационнойБазы') 'НайтиПоИмени' @([string](M $environment 'ИмяСлужебногоПользователя'))
+    # Так БСП выключает вход неактивному пользователю: снимает стандартную аутентификацию.
+    S $gateUser 'АутентификацияСтандартная' $false
+    [void](M $gateUser 'Записать')
+    $broken = [string](M $environment 'ПроблемаПриёма')
+    [void](M $environment 'ВключитьПриём')
+    $gateUser = M (G $target 'ПользователиИнформационнойБазы') 'НайтиПоИмени' @([string](M $environment 'ИмяСлужебногоПользователя'))
+    $loginBack = [bool](G $gateUser 'АутентификацияСтандартная')
+    $after = [string](M $environment 'ПроблемаПриёма')
+    Add-Result 'Reception repairs a login disabled by BSP' ($broken -ne '' -and $loginBack -and $after -eq '') "detected='$broken' login=$loginBack after='$after'"
+}
+
 Invoke-Test 'Gate password is random and rotates' {
     $targetEnvironment = G $target 'WS_ОкружениеСервер'
     $sourceEnvironment = G $source 'WS_ОкружениеСервер'
