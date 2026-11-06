@@ -325,6 +325,15 @@ Invoke-Test 'Object versions give their objects once' {
     }
     $selection = New-Selection $source $keys
     $fields = @(Get-Items (M (G $source 'WS_ТранспортСервер') 'ПоляСсылокРегистра' @(, $selection)) | ForEach-Object { G $_ 'Имя' })
+    $transport = G $source 'WS_ТранспортСервер'
+    $storage = G $source 'ХранилищеОбщихНастроек'
+    $fieldList = M $transport 'ПоляСсылокРегистра' @(, $selection)
+    [void](M $storage 'Удалить' @('WS_HotKeyTransfer', 'ПолеОбъекта|РегистрСведений.ВерсииОбъектов', $null))
+    $default = [string](M $transport 'ПолеОбъектаПоУмолчанию' @($selection, $fieldList))
+    [void](M $transport 'ЗапомнитьПолеОбъекта' @($selection, ''))
+    $remembered = [string](M $transport 'ПолеОбъектаПоУмолчанию' @($selection, $fieldList))
+    [void](M $storage 'Удалить' @('WS_HotKeyTransfer', 'ПолеОбъекта|РегистрСведений.ВерсииОбъектов', $null))
+    Add-Result 'Object field is the default and the choice is kept' ($default -eq 'Объект' -and $remembered -eq '') "default='$default' afterRecordsChosen='$remembered'"
     $check = M (G $source 'WS_ТранспортСервер') 'Проверить' @($selection, $TargetUrl, 'Объект')
     $allRows = Get-Rows $check
     $selected = @($allRows | Where-Object { -not (G $_ 'Related') })
