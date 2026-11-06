@@ -55,9 +55,18 @@ function Invoke-Check($v, $selection) {
     , (M (G $v 'WS_ТранспортСервер') 'Проверить' @($selection, $TargetUrl, ''))
 }
 
-function Invoke-Transfer($v, $selection, [string] $reason = '', $unchecked = $null) {
+function Invoke-Transfer($v, $selection, [string] $reason = '', $unchecked = $null, [bool] $versions = $false) {
     if ($null -eq $unchecked) { $unchecked = M $v 'NewObject' @('Массив') }
-    , (M (G $v 'WS_ТранспортСервер') 'Перенести' @($selection, $TargetUrl, '', $reason, $unchecked))
+    , (M (G $v 'WS_ТранспортСервер') 'Перенести' @($selection, $TargetUrl, '', $reason, $unchecked, $versions))
+}
+
+function Get-Versions($v, $ref) {
+    $query = M $v 'NewObject' @('Запрос', 'ВЫБРАТЬ Версии.НомерВерсии КАК Номер, Версии.Комментарий КАК Комментарий, ПРЕДСТАВЛЕНИЕ(Версии.АвторВерсии) КАК Автор ИЗ РегистрСведений.ВерсииОбъектов КАК Версии ГДЕ Версии.Объект = &Объект УПОРЯДОЧИТЬ ПО Версии.НомерВерсии')
+    [void](M $query 'УстановитьПараметр' @('Объект', $ref))
+    $rows = M (M $query 'Выполнить') 'Выбрать'
+    $list = @()
+    while (M $rows 'Следующий') { $list += [pscustomobject]@{ Number = G $rows 'Номер'; Comment = [string](G $rows 'Комментарий'); Author = [string](G $rows 'Автор') } }
+    , $list
 }
 
 function Get-Rows($check) { , @(Get-Items (G $check 'Строки')) }
@@ -378,6 +387,49 @@ Invoke-Test 'Changed fields are named' {
     $rows = Get-Rows (Invoke-Check $source (New-Selection $source @($linked.Child)))
     $changes = [string](G $rows[0] 'Changes')
     Add-Result 'Changed fields are named' ((G $rows[0] 'Action') -eq 'update' -and $changes -eq 'Наименование') "changes=$changes"
+}
+
+Invoke-Test 'Versions with author and reason are optional' {
+    $metadata = G $target 'Метаданные'
+    if ($null -eq (M (G $metadata 'ОбщиеМодули') 'Найти' @('ВерсионированиеОбъектов')) -or -not (M $target 'ПолучитьФункциональнуюОпцию' @('ИспользоватьВерсионированиеОбъектов'))) {
+        Add-Result 'Versions with author and reason are optional' $true 'versioning is off on target: skipped'
+        return
+    }
+    $versioning = G $target 'ВерсионированиеОбъектов'
+    $catalogName = "Справочник.$($linked.Catalog)"
+    $wasOn = [bool](M $versioning 'ВключеноВерсионированиеОбъекта' @($catalogName))
+    if (-not $wasOn) { [void](M $versioning 'ВключитьВерсионированиеОбъекта' @($catalogName)) }
+    try {
+        $targetChild = Get-RefByUuid $target 'Справочники' $linked.Catalog (Get-Uuid $source $linked.Child)
+        $before = (Get-Versions $target $targetChild).Count
+        $reason = "HKT version test $(Get-Date -Format 'HHmmss')"
+        $object = M $linked.Child 'ПолучитьОбъект'
+        S (G $object 'ОбменДанными') 'Загрузка' $true
+        S $object 'Наименование' ("HKT_VER_" + (Get-Date -Format 'HHmmss'))
+        [void](M $object 'Записать')
+        $transfer = Invoke-Transfer $source (New-Selection $source @($linked.Child)) $reason $null $true
+        $withVersions = Get-Versions $target $targetChild
+        $last = $withVersions | Select-Object -Last 1
+        $created = (G $transfer 'Записано') -and $withVersions.Count -gt $before -and $last.Comment.Contains($reason) -and $last.Comment.Contains('Перенос из') -and $last.Author -ne '' -and $last.Author -notmatch 'служебный'
+
+        S $object 'Наименование' ("HKT_NOVER_" + (Get-Date -Format 'HHmmss'))
+        [void](M $object 'Записать')
+        $quiet = Invoke-Transfer $source (New-Selection $source @($linked.Child)) $reason $null $false
+        $afterQuiet = (Get-Versions $target $targetChild).Count
+        $silent = (G $quiet 'Записано') -and $afterQuiet -eq $withVersions.Count
+
+        $fresh = New-LinkedCatalogItems $source
+        $freshTransfer = Invoke-Transfer $source (New-Selection $source @($fresh.Child)) $reason $null $true
+        $freshVersions = Get-Versions $target (Get-RefByUuid $target 'Справочники' $fresh.Catalog (Get-Uuid $source $fresh.Child))
+        $newObject = (G $freshTransfer 'Записано') -and $freshVersions.Count -ge 1 -and ($freshVersions | Select-Object -Last 1).Comment.Contains($reason)
+
+        Add-Result 'Versions with author and reason are optional' ($created -and $silent -and $newObject) "existing: $before->$($withVersions.Count) author='$($last.Author)' comment='$($last.Comment)'; off: $($withVersions.Count)->$afterQuiet; new: $($freshVersions.Count) err=$(G $transfer 'Ошибка') $(G $freshTransfer 'Ошибка')"
+    } finally {
+        if (-not $wasOn) {
+            $never = G (G $target 'Перечисления') 'ВариантыВерсионированияОбъектов'
+            [void](M $versioning 'ЗаписатьНастройкуВерсионированияПоОбъекту' @($catalogName, (G $never 'НеВерсионировать')))
+        }
+    }
 }
 
 Invoke-Test 'Posted document restores movements' {

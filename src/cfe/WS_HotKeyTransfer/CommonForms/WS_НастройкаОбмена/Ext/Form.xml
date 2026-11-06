@@ -181,7 +181,23 @@
 			<ContextMenu name="СводкаКонтекстноеМеню" id="47"/>
 			<ExtendedTooltip name="СводкаРасширеннаяПодсказка" id="48"/>
 		</LabelField>
-		<InputField name="Причина" id="49">
+		<CheckBoxField name="СоздатьВерсии" id="49">
+			<DataPath>СоздатьВерсии</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать версии объектов в приёмнике (автор и причина видны в истории изменений)</v8:content>
+				</v8:item>
+			</Title>
+			<CheckBoxType>Auto</CheckBoxType>
+			<TitleLocation>Right</TitleLocation>
+			<ContextMenu name="СоздатьВерсииКонтекстноеМеню" id="50"/>
+			<ExtendedTooltip name="СоздатьВерсииРасширеннаяПодсказка" id="51"/>
+			<Events>
+				<Event name="OnChange">СоздатьВерсииПриИзменении</Event>
+			</Events>
+		</CheckBoxField>
+		<InputField name="Причина" id="52">
 			<DataPath>Причина</DataPath>
 			<Title>
 				<v8:item>
@@ -192,10 +208,10 @@
 			<Visible>false</Visible>
 			<AutoMaxWidth>false</AutoMaxWidth>
 			<HorizontalStretch>true</HorizontalStretch>
-			<ContextMenu name="ПричинаКонтекстноеМеню" id="50"/>
-			<ExtendedTooltip name="ПричинаРасширеннаяПодсказка" id="51"/>
+			<ContextMenu name="ПричинаКонтекстноеМеню" id="53"/>
+			<ExtendedTooltip name="ПричинаРасширеннаяПодсказка" id="54"/>
 		</InputField>
-		<InputField name="Состояние" id="52">
+		<InputField name="Состояние" id="55">
 			<DataPath>Состояние</DataPath>
 			<ReadOnly>true</ReadOnly>
 			<TitleLocation>None</TitleLocation>
@@ -203,12 +219,12 @@
 			<AutoMaxWidth>false</AutoMaxWidth>
 			<Height>2</Height>
 			<HorizontalStretch>true</HorizontalStretch>
-			<ContextMenu name="СостояниеКонтекстноеМеню" id="53"/>
-			<ExtendedTooltip name="СостояниеРасширеннаяПодсказка" id="54"/>
+			<ContextMenu name="СостояниеКонтекстноеМеню" id="56"/>
+			<ExtendedTooltip name="СостояниеРасширеннаяПодсказка" id="57"/>
 		</InputField>
 	</ChildItems>
 	<Attributes>
-		<Attribute name="Выбор" id="55">
+		<Attribute name="Выбор" id="58">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -219,7 +235,7 @@
 				<v8:Type>v8:ValueListType</v8:Type>
 			</Type>
 		</Attribute>
-		<Attribute name="Адрес" id="56">
+		<Attribute name="Адрес" id="59">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -234,7 +250,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="Направление" id="57">
+		<Attribute name="Направление" id="60">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -249,7 +265,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="ПолеОбъекта" id="58">
+		<Attribute name="ПолеОбъекта" id="61">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -264,7 +280,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="Причина" id="59">
+		<Attribute name="Причина" id="62">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -279,7 +295,18 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="Состояние" id="60">
+		<Attribute name="СоздатьВерсии" id="63">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать версии</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Состояние" id="64">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -294,7 +321,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="Сводка" id="61">
+		<Attribute name="Сводка" id="65">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -309,7 +336,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="ИмяЦели" id="62">
+		<Attribute name="ИмяЦели" id="66">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -324,7 +351,7 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="РабочаяБаза" id="63">
+		<Attribute name="РабочаяБаза" id="67">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -335,7 +362,7 @@
 				<v8:Type>xs:boolean</v8:Type>
 			</Type>
 		</Attribute>
-		<Attribute name="ПроверкаПройдена" id="64">
+		<Attribute name="ПроверкаПройдена" id="68">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -346,7 +373,7 @@
 				<v8:Type>xs:boolean</v8:Type>
 			</Type>
 		</Attribute>
-		<Attribute name="Записано" id="65">
+		<Attribute name="Записано" id="69">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -357,7 +384,7 @@
 				<v8:Type>xs:boolean</v8:Type>
 			</Type>
 		</Attribute>
-		<Attribute name="Строки" id="66">
+		<Attribute name="Строки" id="70">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -368,12 +395,12 @@
 				<v8:Type>v8:ValueTable</v8:Type>
 			</Type>
 			<Columns>
-				<Column name="Отмечен" id="67">
+				<Column name="Отмечен" id="71">
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
 				</Column>
-				<Column name="Что" id="68">
+				<Column name="Что" id="72">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -382,7 +409,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Результат" id="69">
+				<Column name="Результат" id="73">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -391,7 +418,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Ключ" id="70">
+				<Column name="Ключ" id="74">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -400,7 +427,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Представление" id="71">
+				<Column name="Представление" id="75">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -409,12 +436,12 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Связанный" id="72">
+				<Column name="Связанный" id="76">
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
 				</Column>
-				<Column name="Действие" id="73">
+				<Column name="Действие" id="77">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -423,7 +450,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Изменения" id="74">
+				<Column name="Изменения" id="78">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -432,7 +459,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Сообщение" id="75">
+				<Column name="Сообщение" id="79">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -441,7 +468,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Уровень" id="76">
+				<Column name="Уровень" id="80">
 					<Type>
 						<v8:Type>xs:decimal</v8:Type>
 						<v8:NumberQualifiers>
@@ -451,7 +478,7 @@
 						</v8:NumberQualifiers>
 					</Type>
 				</Column>
-				<Column name="Родители" id="77">
+				<Column name="Родители" id="81">
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
@@ -460,7 +487,7 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
-				<Column name="Виден" id="78">
+				<Column name="Виден" id="82">
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
@@ -485,7 +512,7 @@
 		</Parameter>
 	</Parameters>
 	<Commands>
-		<Command name="Перенести" id="79">
+		<Command name="Перенести" id="83">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -495,7 +522,7 @@
 			<Action>ПеренестиОбработка</Action>
 			<Shortcut>Ctrl+Enter</Shortcut>
 		</Command>
-		<Command name="Проверить" id="80">
+		<Command name="Проверить" id="84">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -505,7 +532,7 @@
 			<Action>ПроверитьОбработка</Action>
 			<Shortcut>F5</Shortcut>
 		</Command>
-		<Command name="ОткрытьОбъект" id="81">
+		<Command name="ОткрытьОбъект" id="85">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -514,7 +541,7 @@
 			</Title>
 			<Action>ОткрытьОбъектОбработка</Action>
 		</Command>
-		<Command name="СнятьСвязанные" id="82">
+		<Command name="СнятьСвязанные" id="86">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -523,7 +550,7 @@
 			</Title>
 			<Action>СнятьСвязанныеОбработка</Action>
 		</Command>
-		<Command name="Настройки" id="83">
+		<Command name="Настройки" id="87">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
