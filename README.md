@@ -1,6 +1,6 @@
 # HotKey Transfer для 1С
 
-[![Последний выпуск](https://img.shields.io/github/v/release/urasovd/ext-1C-HotKey-Transfer?label=%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F)](https://github.com/urasovd/ext-1C-HotKey-Transfer/releases/latest)
+[![Последний выпуск](https://img.shields.io/github/v/release/urasovd/ext-1C-HotKey-Transfer-public?label=%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F)](https://github.com/urasovd/ext-1C-HotKey-Transfer-public/releases/latest)
 [![Лицензия MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![Платформа 8.3.24+](https://img.shields.io/badge/1%D0%A1-8.3.24%2B-yellow)
 
@@ -8,7 +8,7 @@
 
 Вы поправили данные в копии, проверили, что всё работает, и теперь то же самое нужно сделать в рабочей базе. Вместо ручного повтора, выгрузки в XML или обработки «Выгрузка и загрузка данных XML» откройте объект в копии и нажмите `Alt+P`. Окно покажет, что именно изменится в рабочей базе, и после подтверждения запишет только то, что вы отметили.
 
-**[⬇ Скачать WS_HotKeyTransfer.cfe](https://github.com/urasovd/ext-1C-HotKey-Transfer/releases/latest/download/WS_HotKeyTransfer.cfe)**
+**[⬇ Скачать WS_HotKeyTransfer.cfe](https://github.com/urasovd/ext-1C-HotKey-Transfer-public/releases/latest/download/WS_HotKeyTransfer.cfe)**
 
 > Если расширение пригодилось, поставьте ⭐ репозиторию на GitHub и плюс публикации на Infostart. Так его проще найти другим, а я вижу, что расширение полезно и его стоит развивать дальше.
 
@@ -88,7 +88,7 @@ flowchart LR
 
 ### 1. Во всех базах, которые участвуют в обмене
 
-1. [Скачайте `WS_HotKeyTransfer.cfe`](https://github.com/urasovd/ext-1C-HotKey-Transfer/releases/latest/download/WS_HotKeyTransfer.cfe).
+1. [Скачайте `WS_HotKeyTransfer.cfe`](https://github.com/urasovd/ext-1C-HotKey-Transfer-public/releases/latest/download/WS_HotKeyTransfer.cfe).
 2. «Все функции» → «Стандартные» → «Управление расширениями конфигурации» → «Добавить из файла».
 3. В свойствах расширения **снимите флажок «Безопасный режим»**. Без этого платформа запретит сетевой вызов и запись.
 4. Перезапустите сеанс.
@@ -325,7 +325,7 @@ SHA256( хеш пароля пользователя | операция | имя
 | «Перенос запрещён: пользователь…» | Имя, пароль или полные права пользователя в базах различаются. |
 | «В этой базе нет пароля служебного входа» | Введите пароль в «Настройках» или обновите копию из свежего бэкапа. |
 
-Не нашли ответа? [Создайте issue](https://github.com/urasovd/ext-1C-HotKey-Transfer/issues) с текстом сообщения и версией расширения.
+Не нашли ответа? [Создайте issue](https://github.com/urasovd/ext-1C-HotKey-Transfer-public/issues) с текстом сообщения и версией расширения.
 
 ## Версии
 
