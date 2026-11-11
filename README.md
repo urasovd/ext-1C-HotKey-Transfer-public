@@ -10,7 +10,7 @@
 
 **[⬇ Скачать WS_HotKeyTransfer.cfe](https://github.com/urasovd/ext-1C-HotKey-Transfer/releases/latest/download/WS_HotKeyTransfer.cfe)**
 
-> Если расширение пригодилось, поставьте ⭐ репозиторию на GitHub и плюс публикации на Infostart. Так его проще найти другим.
+> Если расширение пригодилось, поставьте ⭐ репозиторию на GitHub и плюс публикации на Infostart. Так его проще найти другим, а я вижу, что расширение полезно и его стоит развивать дальше.
 
 ## Содержание
 
