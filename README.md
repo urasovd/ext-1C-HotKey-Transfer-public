@@ -4,6 +4,10 @@
 [![Лицензия MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![Платформа 8.3.24+](https://img.shields.io/badge/1%D0%A1-8.3.24%2B-yellow)
 
+<a href="https://infostart.ru/1c/tools/2841543/"><img src="https://infostart.ru/bitrix/templates/sandbox_empty/assets/tpl/abo/img/logo.svg" alt="Infostart" width="160"></a>
+
+**[Публикация расширения на Infostart](https://infostart.ru/1c/tools/2841543/)**
+
 **Перенос справочников, документов и записей регистров из копии в рабочую базу 1С одной клавишей `Alt+P`.**
 
 Вы поправили данные в копии, проверили, что всё работает, и теперь то же самое нужно сделать в рабочей базе. Вместо ручного повтора, выгрузки в XML или обработки «Выгрузка и загрузка данных XML» откройте объект в копии и нажмите `Alt+P`. Окно покажет, что именно изменится в рабочей базе, и после подтверждения запишет только то, что вы отметили.
